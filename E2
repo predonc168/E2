@@ -1,0 +1,25 @@
+import express from "express";
+import { execSync } from "child_process";
+import fs from "fs";
+
+const app = express();
+app.use(express.json());
+
+app.post("/video", (req, res) => {
+  const { text } = req.body;
+
+  const output = "video.mp4";
+
+  execSync(`
+    ffmpeg -f lavfi -i color=c=black:s=1280x720:d=6 \
+    -vf "drawtext=text='${text}':fontcolor=white:fontsize=24:x=10:y=H-th-10" \
+    -y ${output}
+  `);
+
+  const video = fs.readFileSync(output);
+
+  res.setHeader("Content-Type", "video/mp4");
+  res.send(video);
+});
+
+app.listen(3000, () => console.log("Video server running"));
