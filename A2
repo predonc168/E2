@@ -1,0 +1,11 @@
+{
+  "name": "video-server",
+  "version": "1.0.0",
+  "main": "video.js",
+  "scripts": {
+    "start": "node video.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
